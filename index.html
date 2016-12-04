@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de" data-ng-app="magicMirrorApp">
+<head>
+  <title>MagicMirror</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Maven+Pro">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6" data-ng-controller="WeatherCtrl">
+
+        <h1>Weather</h1>
+        <h2>{{location}}</h2>
+
+        <h3><i class="wi wi-thermometer"></i> {{temp | number : 0}} °C</h3>
+
+        <h3><i class="wi" data-ng-class="icon"></i> {{description}}</h3>
+
+        <h3><i class="wi wi-direction-down"></i> {{temp_min | number : 0}} °C <i class="wi wi-direction-up"></i> {{temp_max | number : 0}} °C</h3>
+
+        <h3><i class="wi wi-humidity"></i>  {{humidity | number : 0}} %</h3>
+
+        <h3><i class="wi wi-sunrise"></i> {{sunrise * 1000 | date:'HH:mm'}}</h3>
+        <h3><i class="wi wi-sunset"></i> {{sunset * 1000 | date:'HH:mm'}}</h3>
+
+        <div data-ng-repeat="forecast in forecasts">
+          <div>{{forecast.dt * 1000 | date:'EEEE'}} <i class="wi wi-direction-down"></i> {{forecast.temp.min | number : 0}} °C <i class="wi wi-direction-up"></i> {{forecast.temp.max | number : 0}} °C {{forecast.weather.icon}} <div data-ng-if="forecast.rain"><i class="wi wi-umbrella"></i> {{forecast.rain}} mm</div> </div>
+        </div>
+
+      </div>
+
+      <div class="col-xs-6" data-ng-controller="DateTimeCtrl" style="text-align: right;">
+        <h1>DateTime</h1>
+
+        <h3>{{ clock  | date:'EEEE'}}</h3>
+        <h3>{{ clock  | date:'dd. MMMM yyyy'}}</h3>
+        <h3><i class="wi wi-time-3"></i> {{ clock  | date:'HH:mm:ss'}}</h3>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h1>Magic Mirror<h1>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.9/angular-locale_de-de.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/app.config.js"></script>
+</body>
+</html>
