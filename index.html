@@ -14,36 +14,47 @@
 </head>
 <body>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
+
       <div class="col-xs-6" data-ng-controller="WeatherCtrl">
 
-        <h1>Weather</h1>
-        <h2>{{location}}</h2>
-
-        <h3><i class="wi wi-thermometer"></i> {{temp | number : 0}} °C</h3>
-
-        <h3><i class="wi" data-ng-class="icon"></i> {{description}}</h3>
-
-        <h3><i class="wi wi-direction-down"></i> {{temp_min | number : 0}} °C <i class="wi wi-direction-up"></i> {{temp_max | number : 0}} °C</h3>
-
-        <h3><i class="wi wi-humidity"></i>  {{humidity | number : 0}} %</h3>
-
-        <h3><i class="wi wi-sunrise"></i> {{sunrise * 1000 | date:'HH:mm'}}</h3>
-        <h3><i class="wi wi-sunset"></i> {{sunset * 1000 | date:'HH:mm'}}</h3>
-
-        <div data-ng-repeat="forecast in forecasts">
-          <div>{{forecast.dt * 1000 | date:'EEEE'}} <i class="wi wi-direction-down"></i> {{forecast.temp.min | number : 0}} °C <i class="wi wi-direction-up"></i> {{forecast.temp.max | number : 0}} °C {{forecast.weather.icon}} <div data-ng-if="forecast.rain"><i class="wi wi-umbrella"></i> {{forecast.rain}} mm</div> </div>
+        <div class="row">
+          <div class="col-xs-4 col-xs-offset-1 col-sm-3 col-md-3 col-lg-2 centered">
+            <h1 style="font-size: 60px"><i class="wi" data-ng-class="weather.weather[0].icon | convertToIcon"></i></h1>
+            <h3 style="font-size: 30px">{{weather.weather[0].main}}</h3>
+            <h4>{{weather.main.humidity | number : 0}} <i class="wi wi-humidity"></i></h4>
+          </div>
+          <div class="col-xs-4 col-xs-offset-1 col-sm-3 col-md-3 col-lg-2 centered">
+            <h1 style="font-size: 45px">{{weather.main.temp | number : 0}}°C</h1>
+            <h4 >{{weather.main.temp_min | number : 0}}°C {{weather.main.temp_max | number : 0}}°C</h4>
+            <h5><i class="wi wi-sunrise"></i> {{weather.sys.sunrise * 1000 | date:'HH:mm'}}</h5>
+            <h5><i class="wi wi-sunset"></i> {{weather.sys.sunset * 1000 | date:'HH:mm'}}</h5>
+          </div>
         </div>
+
+        <div data-ng-if="forecasts[0].rain">
+          <h5>Nimm einen Regenschirm mit <i class="wi wi-umbrella"></i></h5>
+        </div>
+
+        <br />
+
+        <table class="table-condensed">
+          <tr data-ng-repeat="forecast in forecasts">
+            <td>{{forecast.dt * 1000 | date:'EEEE'}}</td>
+            <td><i class="wi" data-ng-class="forecast.weather[0].icon | convertToIcon"></i></td>
+            <td>{{forecast.temp.min | number : 0}} °C</td>
+            <td>{{forecast.temp.max | number : 0}} °C</td>
+            <td><span data-ng-if="forecast.rain"><i class="wi wi-umbrella"></i> {{forecast.rain}} mm</span></td>
+          </tr>
+        </table>
 
       </div>
 
       <div class="col-xs-6" data-ng-controller="DateTimeCtrl" style="text-align: right;">
-        <h1>DateTime</h1>
 
-        <h3>{{ clock  | date:'EEEE'}}</h3>
-        <h3>{{ clock  | date:'dd. MMMM yyyy'}}</h3>
-        <h3><i class="wi wi-time-3"></i> {{ clock  | date:'HH:mm:ss'}}</h3>
+        <h4>{{ clock  | date:'EEEE, dd. MMMM yyyy'}}</h4>
+        <h1>{{ clock  | date:'HH:mm'}}</h1>
 
       </div>
 
