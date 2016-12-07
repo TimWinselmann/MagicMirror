@@ -22,6 +22,9 @@ magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSeria
   // current weather
   $http.get(url + 'weather?' + qs).then(function(response) {
     $scope.weather = response.data;
+
+    $scope.weather.sys.sunrise *= 1000;
+    $scope.weather.sys.sunset *= 1000;
 	}, function(response) {
 		$log.error(response);
   });
