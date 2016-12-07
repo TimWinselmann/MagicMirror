@@ -1,6 +1,6 @@
-var lightmanager = angular.module('magicMirrorApp', []);
+var magicMirrorApp = angular.module('magicMirrorApp', []);
 
-lightmanager.controller("DateTimeCtrl", function($scope, $interval) {
+magicMirrorApp.controller("DateTimeCtrl", function($scope, $interval) {
   $scope.clock = Date.now();
 
   $interval(function () {
@@ -8,22 +8,26 @@ lightmanager.controller("DateTimeCtrl", function($scope, $interval) {
   }, 1000);
 });
 
-lightmanager.controller("WeatherCtrl", function($scope, $http, $log, $timeout, openweathermap_config) {
+magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSerializer, $log, $timeout, openweathermap_config) {
   $scope.location = openweathermap_config.location;
 
   var url = 'http://api.openweathermap.org/data/2.5/';
+  var params = {
+    'id': openweathermap_config.locationID,
+    'units' : 'metric',
+    'appid' : openweathermap_config.appid
+  };
+  var qs = $httpParamSerializer(params);
 
   // current weather
-  $http.get(url + 'weather?id=' + openweathermap_config.locationID + '&units=metric&appid=' + openweathermap_config.appid).then(function(response) {
-    $log.debug(response);
+  $http.get(url + 'weather?' + qs).then(function(response) {
     $scope.weather = response.data;
 	}, function(response) {
 		$log.error(response);
   });
 
   // five day forecast
-  $http.get(url + 'forecast/daily?id=' + openweathermap_config.locationID + '&units=metric&appid=' + openweathermap_config.appid).then(function(response) {
-    $log.debug(response);
+  $http.get(url + 'forecast/daily?' + qs).then(function(response) {
     $scope.forecasts = response.data.list;
   }, function(response) {
     $log.error(response);
@@ -31,7 +35,7 @@ lightmanager.controller("WeatherCtrl", function($scope, $http, $log, $timeout, o
 
 });
 
-lightmanager.filter('convertToIcon', function() {
+magicMirrorApp.filter('convertToIcon', function() {
   return function(iconCode) {
     var iconMapping = {"01d": "wi-day-sunny", "02d": "wi-day-cloudy", "03d": "wi-cloud",
                        "04d": "wi-cloudy", "09d": "wi-showers", "10d": "wi-rain",
