@@ -3,7 +3,7 @@ body {
   background-color: #FAFAFA !important;
 }
 
-.centered {
+.centered, centered td, centered th {
   vertical-align: middle !important;
   text-align: center !important;
 }
