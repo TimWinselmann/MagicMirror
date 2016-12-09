@@ -1,6 +1,6 @@
 var magicMirrorApp = angular.module('magicMirrorApp');
 
-magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSerializer, $log, $timeout, openweathermap_config) {
+magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSerializer, $interval, $log, openweathermap_config) {
   $scope.location = openweathermap_config.location;
 
   var url = 'http://api.openweathermap.org/data/2.5/';
@@ -11,24 +11,33 @@ magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSeria
   };
   var qs = $httpParamSerializer(params);
 
-  // current weather
-  $http.get(url + 'weather?' + qs).then(function(response) {
-    $scope.weather = response.data;
+  var loadData = function () {
 
-    /* convert from utc seconds to milliseconds */
-    $scope.weather.sys.sunrise *= 1000;
-    $scope.weather.sys.sunset *= 1000;
-	}, function(response) {
-		$log.error(response);
-  });
+    /* load current weather */
+    $http.get(url + 'weather?' + qs).then(function(response) {
+      $scope.weather = response.data;
 
-  // five day forecast
-  $http.get(url + 'forecast/daily?' + qs).then(function(response) {
-    $scope.forecasts = response.data.list;
-  }, function(response) {
-    $log.error(response);
-  });
+      /* convert from utc seconds to milliseconds */
+      $scope.weather.sys.sunrise *= 1000;
+      $scope.weather.sys.sunset *= 1000;
+  	}, function(response) {
+  		$log.error(response);
+    });
 
+    /* load five day forecast */
+    $http.get(url + 'forecast/daily?' + qs).then(function(response) {
+      $scope.forecasts = response.data.list;
+    }, function(response) {
+      $log.error(response);
+    });
+
+  };
+
+  /* initial run */
+  loadData();
+
+  /* reload weather data every ten minutes */
+  $interval(loadData, 10 * 60 * 1000);
 });
 
 magicMirrorApp.filter('convertToIcon', function() {
@@ -48,6 +57,10 @@ magicMirrorApp.filter('convertToIcon', function() {
 
 magicMirrorApp.filter('translateWeatherGerman', function() {
   return function(weatherCode) {
+    if (weatherCode == undefined) {
+      return undefined;
+    }
+
     var weather = weatherCode.toLowerCase();
 
     var weatherMapping = {
@@ -62,7 +75,7 @@ magicMirrorApp.filter('translateWeatherGerman', function() {
       "drizzle": "Nieselregen",
     }
 
-    var weatherTranslation = weatherMapping[weather]
+    var weatherTranslation = weatherMapping[weather];
     return weatherTranslation != undefined ? weatherTranslation : weatherCode;
   };
 });
