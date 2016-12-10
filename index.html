@@ -46,7 +46,7 @@
             <td><i class="wi" data-ng-class="forecast.weather[0].icon | convertToIcon"></i></td>
             <td>{{forecast.temp.min | number : 0}} °C</td>
             <td>{{forecast.temp.max | number : 0}} °C</td>
-            <td><span data-ng-if="forecast.rain"><i class="wi wi-umbrella"></i> {{forecast.rain}} mm</span></td>
+            <td><i class="wi wi-umbrella" data-ng-class="forecast.rain ? '' : 'wi-rotate-180'"></i> {{forecast.rain}} {{forecast.rain ? 'mm' : ''}} </td>
           </tr>
         </table>
 
