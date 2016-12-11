@@ -20,3 +20,10 @@ magicMirrorApp.controller("QuotationCtrl", function($scope, $http, $interval, $l
   /* reload quotation data every hour */
   $interval(loadData, 60 * 60 * 1000);
 });
+
+magicMirrorApp.component('quotationDetail', {
+  templateUrl: 'components/quotationDetails.html',
+  bindings: {
+    quotation: '='
+  }
+});

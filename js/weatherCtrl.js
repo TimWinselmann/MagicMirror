@@ -1,7 +1,6 @@
 var magicMirrorApp = angular.module('magicMirrorApp');
 
 magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSerializer, $interval, $log, openweathermap_config) {
-  $scope.location = openweathermap_config.location;
 
   var url = 'http://api.openweathermap.org/data/2.5/';
   var params = {
@@ -38,6 +37,14 @@ magicMirrorApp.controller("WeatherCtrl", function($scope, $http, $httpParamSeria
 
   /* reload weather data every ten minutes */
   $interval(loadData, 10 * 60 * 1000);
+});
+
+magicMirrorApp.component('weatherDetail', {
+  templateUrl: 'components/weatherDetails.html',
+  bindings: {
+    weather: '=',
+    forecasts: '='
+  }
 });
 
 magicMirrorApp.filter('convertToIcon', function() {
