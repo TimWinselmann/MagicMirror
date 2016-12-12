@@ -1,7 +1,7 @@
 <table class="table-condensed centered">
   <tr>
     <td>
-      <h1 style="font-size: 60px"><i class="wi" data-ng-class="$ctrl.weather.weather[0].icon | convertToIcon"></i></h1>
+      <h1 style="font-size: 60px"><i class="wi" data-ng-class="$ctrl.weather.weather[0].icon | convertToIcon" title="{{$ctrl.weather.weather[0].description}}"></i></h1>
       <h3 style="font-size: 30px">{{$ctrl.weather.weather[0].main | translateWeatherGerman}}</h3>
     </td>
     <td>&nbsp;</td>
@@ -22,7 +22,7 @@
 <table class="table-condensed">
   <tr data-ng-repeat="forecast in $ctrl.forecasts">
     <td>{{forecast.dt * 1000 | date:'EEEE'}}</td>
-    <td><i class="wi" data-ng-class="forecast.weather[0].icon | convertToIcon"></i></td>
+    <td><i class="wi" data-ng-class="forecast.weather[0].icon | convertToIcon" title="{{forecast.weather[0].description}}"></i></td>
     <td>{{forecast.temp.min | number : 0}} °C</td>
     <td>{{forecast.temp.max | number : 0}} °C</td>
     <td><i class="wi wi-umbrella" data-ng-class="forecast.rain ? '' : 'wi-rotate-180'"></i> {{forecast.rain}} {{forecast.rain ? 'mm' : ''}} </td>
