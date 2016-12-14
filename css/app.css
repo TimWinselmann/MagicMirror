@@ -1,6 +1,7 @@
 body {
   font-family: 'Maven Pro', sans-serif;
-  background-color: #FAFAFA !important;
+  background-color: #222222 !important;
+  color: #E6E6E6 !important;
 }
 
 .centered, centered td, centered th {
