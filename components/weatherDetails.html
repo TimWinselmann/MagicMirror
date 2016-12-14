@@ -2,24 +2,24 @@
   <tr>
     <td>
       <h1 style="font-size: 60px"><i class="wi" data-ng-class="$ctrl.weather.weather[0].icon | convertToIcon" title="{{$ctrl.weather.weather[0].description}}"></i></h1>
-      <h3 style="font-size: 30px">{{$ctrl.weather.weather[0].main | translateWeatherGerman}}</h3>
+      <h2>{{$ctrl.weather.weather[0].main | translateWeatherGerman}}</h2>
     </td>
     <td>&nbsp;</td>
     <td>
-      <h1 style="font-size: 45px">{{$ctrl.weather.main.temp | number : 0}}°C</h1>
-      <h5><i class="wi wi-sunrise"></i> {{$ctrl.weather.sys.sunrise | date:'HH:mm'}}</h5>
-      <h5><i class="wi wi-sunset"></i> {{$ctrl.weather.sys.sunset | date:'HH:mm'}}</h5>
+      <h1>{{$ctrl.weather.main.temp | number : 0}}°C</h1>
+      <h4><i class="wi wi-sunrise"></i> {{$ctrl.weather.sys.sunrise | date:'HH:mm'}}</h4>
+      <h4><i class="wi wi-sunset"></i> {{$ctrl.weather.sys.sunset | date:'HH:mm'}}</h4>
       <h4>{{$ctrl.weather.main.humidity | number : 0}} <i class="wi wi-humidity"></i></h4>
     </td>
   </tr>
   <tr>
     <td colspan="3">
-      <h5 data-ng-if="$ctrl.forecasts[0].rain"><b>Nehmen Sie Ihren Regenschirm mit <i class="wi wi-umbrella"></i></b></h5>
+      <h4 data-ng-if="$ctrl.forecasts[0].rain"><b>Nehmen Sie Ihren Regenschirm mit <i class="wi wi-umbrella"></i></b></h4>
     </td>
   </tr>
 </table>
 
-<table class="table-condensed">
+<table class="table-condensed forecast-table">
   <tr data-ng-repeat="forecast in $ctrl.forecasts">
     <td>{{forecast.dt * 1000 | date:'EEEE'}}</td>
     <td><i class="wi" data-ng-class="forecast.weather[0].icon | convertToIcon" title="{{forecast.weather[0].description}}"></i></td>

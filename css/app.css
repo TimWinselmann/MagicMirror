@@ -14,7 +14,24 @@ body {
   width: 100%;
 }
 
+.centered {
+  vertical-align: center;
+  text-align: center;
+}
+
 .quotation-row {
   vertical-align: bottom;
   text-align: center;
+}
+
+h1 {
+  font-size: 45px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+.forecast-table {
+  font-size: 16px;
 }
