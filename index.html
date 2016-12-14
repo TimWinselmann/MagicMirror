@@ -16,27 +16,28 @@
 </head>
 <body>
 
-  <div class="container-fluid">
+  <table class="magic-mirror-table">
+    <tr>
+      <td valign="top">
+        <div class="row">
 
-    <div class="row">
+          <div class="col-xs-6" data-ng-controller="WeatherCtrl">
+            <weather-detail location="location" weather="weather" forecasts="forecasts"></weather-detail>
+          </div>
 
-      <div class="col-xs-6" data-ng-controller="WeatherCtrl">
-        <weather-detail location="location" weather="weather" forecasts="forecasts"></weather-detail>
-      </div>
+          <div class="col-xs-6" data-ng-controller="DateTimeCtrl" style="text-align: right;">
+            <date-time-detail clock="clock"></date-time-detail>
+          </div>
 
-      <div class="col-xs-6" data-ng-controller="DateTimeCtrl" style="text-align: right;">
-        <date-time-detail clock="clock"></date-time-detail>
-      </div>
-
-    </div>
-
-    <div class="row" data-ng-controller="QuotationCtrl">
-      <div class="col-xs-12 text-center">
+        </div>
+      </td>
+    </tr>
+    <tr data-ng-controller="QuotationCtrl" class="quotation-row">
+      <td>
         <quotation-detail quotation="quotation"></quotation-detail>
-      </div>
-    </div>
-
-  </div>
+      </td>
+    </tr>
+  </table>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
