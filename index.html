@@ -18,22 +18,15 @@
 
   <table class="magic-mirror-table">
     <tr>
-      <td valign="top">
-        <div class="row">
-
-          <div class="col-xs-6" data-ng-controller="WeatherCtrl">
-            <weather-detail location="location" weather="weather" forecasts="forecasts"></weather-detail>
-          </div>
-
-          <div class="col-xs-6" data-ng-controller="DateTimeCtrl" style="text-align: right;">
-            <date-time-detail clock="clock"></date-time-detail>
-          </div>
-
-        </div>
+      <td valign="top" data-ng-controller="WeatherCtrl">
+        <weather-detail location="location" weather="weather" forecasts="forecasts"></weather-detail>
+      </td>
+      <td valign="top" data-ng-controller="DateTimeCtrl" style="text-align: right;">
+        <date-time-detail clock="clock"></date-time-detail>
       </td>
     </tr>
-    <tr data-ng-controller="QuotationCtrl" class="quotation-row">
-      <td>
+    <tr class="quotation-row">
+      <td data-ng-controller="QuotationCtrl" colspan="2">
         <quotation-detail quotation="quotation"></quotation-detail>
       </td>
     </tr>
