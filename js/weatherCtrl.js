@@ -77,7 +77,7 @@ magicMirrorApp.filter('translateWeatherGerman', function() {
       "rain": "Regen",
       "thunderstorm": "Gewitter",
       "snow": "Schnee",
-      "mist": "Nebel",
+      "mist": "Dunst",
       "fog": "Nebel",
       "drizzle": "Nieselregen",
     }
