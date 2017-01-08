@@ -35,3 +35,12 @@ h3 {
 .forecast-table {
   font-size: 16px;
 }
+
+.calendar-table {
+  float:right;
+  font-size: 16px;
+}
+
+.deactivated {
+  color: #CCCCCC !important;
+}

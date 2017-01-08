@@ -1,0 +1,13 @@
+  <table class="table-condensed calendar-table">
+  <tr data-ng-repeat="event in $ctrl.events | orderBy:'startDate'">
+    <td><i data-ng-class="!event.startsToday && !event.endsToday ? 'fa fa-calendar' : 'fa fa-calendar-plus-o'"></i>
+    </td>
+    <td style="text-align: left;">
+      {{event.title}}
+    </td>
+    <td>{{event.startsToday ? (event.startDate | date:'HH:mm') : ''}}
+    </td>
+    <td>{{event.endsToday ? (event.endDate | date:'HH:mm') : ''}}
+    </td>
+  </tr>
+</table>
