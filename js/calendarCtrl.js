@@ -6,14 +6,13 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
 
   for (var i = 0; i < calendar_config.ical_urls.length; i++) {
     $http.get(calendar_config.ical_urls[i]).then(function(response) {
-      var now = ICAL.Time.now();
-      parseIcal(response.data, now);
+      parseIcal(response.data);
   	}, function(response) {
   		$log.error(response);
     });
   }
 
-  var parseIcal = function (icalData, date) {
+  var parseIcal = function (icalData) {
     var jcalData = ICAL.parse(icalData);
     var comp = new ICAL.Component(jcalData);
 
