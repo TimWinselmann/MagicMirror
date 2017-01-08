@@ -55,7 +55,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
 
           /* handle infinite rules: limit iterations */
           if (recurringLimit == 100) {
-            $log.debug('Reached recurring limit for ' + title);
+            //$log.debug('Reached recurring limit for ' + title);
             break;
           }
           recurringLimit++;
@@ -79,7 +79,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
           //$log.debug('Event: ' + title);
 
           if (now > endDate) {
-            $log.debug('Event already finished: ' + title);
+            //$log.debug('Event already finished: ' + title);
             alreadyFinished = true;
           }
 
