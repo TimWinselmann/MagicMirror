@@ -48,6 +48,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
               'startsToday': event.duration.days < 1,
               'endDate': endDate,
               'endsToday': event.duration.days < 1,
+              // TODO add alreadyFinished flag
             });
 
           }
@@ -66,6 +67,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
         var title = event.summary || false;
         var startDate = event.startDate.toJSDate();
         var endDate = event.endDate.toJSDate();
+        var alreadyFinished = false;
 
         if (endDate.withoutTime() < now.withoutTime()) {
           //$log.debug('Event ends in the past: ' + title);
@@ -74,9 +76,12 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
           //$log.debug('Event starts in the future: ' + title);
           continue;
         } else if (startDate.withoutTime() <= now.withoutTime()) {
-          //$log.debug('Event: ' + title, event);
+          //$log.debug('Event: ' + title);
 
-          // TODO add class 'deactivated' if event finished
+          if (now > endDate) {
+            $log.debug('Event already finished: ' + title);
+            alreadyFinished = true;
+          }
 
           $scope.events.push({
             'title': title,
@@ -84,6 +89,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
             'startsToday': startDate.withoutTime() == now.withoutTime(),
             'endDate': endDate,
             'endsToday': endDate.withoutTime() == now.withoutTime(),
+            'alreadyFinished': alreadyFinished,
           });
 
         }
