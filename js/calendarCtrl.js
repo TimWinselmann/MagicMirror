@@ -15,15 +15,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
   var parseIcal = function (icalData) {
     var jcalData = ICAL.parse(icalData);
     var comp = new ICAL.Component(jcalData);
-
     var events = comp.getAllSubcomponents('vevent');
-
-    var timezoneComp = comp.getFirstSubcomponent('vtimezone');
-    var tzid = timezoneComp.getFirstPropertyValue('tzid');
-    var timezone = new ICAL.Timezone({
-      component: timezoneComp,
-      tzid
-    });
 
     var now = new Date();
 
@@ -34,6 +26,11 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
 
         var title = event.summary || false;
         var endDate = event.endDate.toJSDate();
+        /* the end date of a recurring event is the first end date
+         * in that series, which does not represent the correct
+         * value. Adjust end date of recurring events to now */
+        endDate = new Date(endDate.setFullYear(now.getFullYear(), now.getMonth(), now.getDate()));
+        var alreadyFinished = false;
 
         var recurringLimit = 0;
         var expand = event.iterator();
@@ -41,6 +38,12 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
         while (next = expand.next()) {
           var startDate = next.toJSDate();
           if (startDate.withoutTime() == now.withoutTime()) {
+            //$log.debug('Event: ' + title, startDate, endDate, now);
+
+            if (now.getTime() > endDate.getTime()) {
+              //$log.debug('Event already finished: ' + title);
+              alreadyFinished = true;
+            }
 
             $scope.events.push({
               'title': title,
@@ -48,7 +51,7 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
               'startsToday': event.duration.days < 1,
               'endDate': endDate,
               'endsToday': event.duration.days < 1,
-              // TODO add alreadyFinished flag
+              'alreadyFinished': alreadyFinished,
             });
 
           }
@@ -78,7 +81,12 @@ magicMirrorApp.controller("CalendarCtrl", function($scope, $http, $interval, $lo
         } else if (startDate.withoutTime() <= now.withoutTime()) {
           //$log.debug('Event: ' + title);
 
-          if (now > endDate) {
+          if (endDate.getTime() == now.atMidnight().getTime()) {
+            //$log.debug('Event ends last night: ' + title);
+            continue;
+          }
+
+          if (now.getTime() > endDate.getTime()) {
             //$log.debug('Event already finished: ' + title);
             alreadyFinished = true;
           }
@@ -112,4 +120,12 @@ Date.prototype.withoutTime = function () {
     var d = new Date(this);
     d.setHours(0, 0, 0, 0, 0);
     return d.getTime();
+}
+
+/* extend Date prototype: atMidnight() returns a new Date instance
+ * without time information in javascript date format */
+Date.prototype.atMidnight = function () {
+    var d = new Date(this);
+    d.setHours(0, 0, 0, 0, 0);
+    return d;
 }
