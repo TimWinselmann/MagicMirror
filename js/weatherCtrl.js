@@ -71,6 +71,7 @@ magicMirrorApp.filter('translateWeatherGerman', function() {
     var weather = weatherCode.toLowerCase();
 
     var weatherMapping = {
+      "clear" : "Klar",
       "clear sky": "Klarer Himmel",
       "few clouds": "Wenig bewölkt",
       "shower rain": "Regenschauer",
