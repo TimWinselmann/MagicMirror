@@ -1,14 +1,14 @@
-  <table class="table-condensed calendar-table">
-  <tr data-ng-repeat="event in $ctrl.events | orderBy:'startDate'"
+<table class="table-condensed calendar-table">
+  <tr data-ng-repeat="event in filteredEvents = ($ctrl.events | filter:{alreadyFinished:false} | orderBy:'startDate')"
       data-ng-class="event.alreadyFinished ? 'deactivated' :''">
-    <td><i data-ng-class="!event.startsToday && !event.endsToday ? 'fa fa-calendar' : 'fa fa-calendar-plus-o'"></i>
+    <td><i ng-style="{color: event.color}" data-ng-class="event.wholeDayEvent ? 'fa fa-calendar' : 'fa fa-calendar-plus-o'"></i>
     </td>
-    <td style="text-align: left;">
-      {{event.title}}
+    <td style="text-align: left;">{{event.title}}
     </td>
-    <td>{{event.startsToday ? (event.startDate | date:'HH:mm') : ''}}
-    </td>
-    <td>{{event.endsToday ? (event.endDate | date:'HH:mm') : ''}}
-    </td>
+    <td>{{!event.wholeDayEvent ? (event.startDate | date:'HH:mm') : ''}}</td>
+    <td>{{!event.wholeDayEvent ? (event.endDate | date:'HH:mm') : ''}}</td>
   </tr>
 </table>
+<div ng-hide="filteredEvents.length">
+  Nothing on your calendar
+</div>
